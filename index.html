@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: #0d1f1a; color: #f0ede6; }
+  .page { max-width: 900px; margin: 0 auto; background: #0d1f1a; }
+
+  /* WAITLIST BAR */
+  .waitlist-bar {
+    background: #1D9E75;
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .waitlist-bar-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: #f0ede6;
+    line-height: 1.4;
+  }
+  .waitlist-bar-text span {
+    opacity: 0.75;
+    font-weight: 400;
+    font-size: 13px;
+    display: block;
+    margin-top: 2px;
+  }
+  .waitlist-bar-btn {
+    display: inline-block;
+    background: #f0ede6;
+    color: #0d1f1a;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 11px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+  }
+  .waitlist-bar-btn:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero { position: relative; padding: 56px 56px 48px; border-bottom: 1px solid rgba(255,255,255,0.08); overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(29,158,117,0.18) 0%, transparent 70%); pointer-events: none; }
+  .hero-badge { display: inline-block; background: rgba(29,158,117,0.15); border: 1px solid rgba(29,158,117,0.35); color: #5DCAA5; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 24px; }
+  .hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(48px, 8vw, 72px); line-height: 1.0; color: #f0ede6; margin-bottom: 8px; letter-spacing: -1px; }
+  .hero-title em { font-style: italic; color: #5DCAA5; }
+  .hero-tagline { font-family: 'DM Serif Display', serif; font-style: italic; font-size: clamp(18px, 3vw, 22px); color: rgba(240,237,230,0.5); margin-bottom: 24px; }
+  .hero-desc { font-size: 16px; line-height: 1.7; color: rgba(240,237,230,0.72); max-width: 560px; margin-bottom: 32px; }
+  .resorts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .resort-pill { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(240,237,230,0.8); font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 100px; }
+  .mountain-graphic { position: absolute; bottom: 0; right: 56px; opacity: 0.07; }
+
+  /* STATS */
+  .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .stat-item { padding: 28px 32px; border-right: 1px solid rgba(255,255,255,0.08); }
+  .stat-item:last-child { border-right: none; }
+  .stat-number { font-family: 'DM Serif Display', serif; font-size: 40px; color: #5DCAA5; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 12px; color: rgba(240,237,230,0.5); line-height: 1.4; }
+
+  /* BODY */
+  .body-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .col-left { padding: 48px 48px; border-right: 1px solid rgba(255,255,255,0.08); }
+  .col-right { padding: 48px 48px; }
+  .section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #5DCAA5; margin-bottom: 16px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 26px; line-height: 1.2; color: #f0ede6; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.75; color: rgba(240,237,230,0.65); margin-bottom: 28px; }
+  .steps { display: flex; flex-direction: column; gap: 16px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .step-num { width: 26px; height: 26px; border-radius: 50%; background: rgba(29,158,117,0.15); border: 1px solid rgba(29,158,117,0.3); color: #5DCAA5; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-title { font-size: 14px; font-weight: 600; color: #f0ede6; margin-bottom: 3px; }
+  .step-desc { font-size: 13px; color: rgba(240,237,230,0.55); line-height: 1.5; }
+  .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .impact-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px; }
+  .impact-icon { font-size: 18px; margin-bottom: 6px; }
+  .impact-title { font-size: 13px; font-weight: 600; color: #f0ede6; margin-bottom: 3px; }
+  .impact-desc { font-size: 12px; color: rgba(240,237,230,0.5); line-height: 1.4; }
+  .free-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(29,158,117,0.1); border: 1px solid rgba(29,158,117,0.25); border-radius: 10px; padding: 10px 16px; margin-bottom: 18px; }
+  .free-dot { width: 7px; height: 7px; border-radius: 50%; background: #5DCAA5; flex-shrink: 0; }
+  .free-text { font-size: 13px; color: #5DCAA5; font-weight: 500; }
+
+  /* CTA */
+  .cta-section { background: rgba(29,158,117,0.08); border-top: 1px solid rgba(29,158,117,0.2); padding: 56px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .cta-title { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 5vw, 36px); color: #f0ede6; margin-bottom: 12px; line-height: 1.2; }
+  .cta-subtitle { font-size: 15px; color: rgba(240,237,230,0.6); line-height: 1.6; max-width: 460px; margin-bottom: 28px; }
+  .waitlist-btn-large { display: inline-block; background: #1D9E75; color: #f0ede6; text-decoration: none; border-radius: 10px; padding: 16px 40px; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600; transition: background 0.2s; }
+  .waitlist-btn-large:hover { background: #5DCAA5; color: #0d1f1a; }
+  .waitlist-note { margin-top: 14px; font-size: 12px; color: rgba(240,237,230,0.35); }
+
+  /* FOOTER */
+  .footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 22px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 17px; color: rgba(240,237,230,0.6); }
+  .footer-logo span { color: #5DCAA5; }
+  .footer-note { font-size: 12px; color: rgba(240,237,230,0.35); }
+  .full-divider { height: 1px; background: rgba(255,255,255,0.08); }
+
+  /* MOBILE */
+  @media (max-width: 640px) {
+    .waitlist-bar { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .waitlist-bar-btn { width: 100%; text-align: center; }
+    .hero { padding: 40px 24px 36px; }
+    .mountain-graphic { display: none; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3) { grid-column: 1 / -1; border-right: none; border-top: 1px solid rgba(255,255,255,0.08); padding: 20px 24px; }
+    .stat-item { padding: 20px 20px; }
+    .stat-number { font-size: 34px; }
+    .body-grid { grid-template-columns: 1fr; }
+    .col-left { padding: 36px 24px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .col-right { padding: 36px 24px; }
+    .cta-section { padding: 40px 24px; }
+    .waitlist-btn-large { width: 100%; text-align: center; padding: 16px 24px; }
+    .footer { padding: 20px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- WAITLIST BAR TOP -->
+  <div class="waitlist-bar">
+    <div class="waitlist-bar-text">
+      Beta launching this season — spots are limited.
+      <span>Join the waitlist and be first in the canyon.</span>
+    </div>
+    <a class="waitlist-bar-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdwuLKlryYMyeKNqF0pLusnJe2HTHm6KBTPgZsqcPTOg4JbeA/viewform?usp=publish-editor" target="_blank">Join the waitlist →</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Coming This Season · Utah Wasatch Front</div>
+    <div class="hero-title">Cottonwood<br><em>Carpool</em></div>
+    <div class="hero-tagline">Two canyons. Zero empty seats.</div>
+    <p class="hero-desc">A free carpool platform connecting skiers and snowboarders heading into Little and Big Cottonwood Canyon — so empty seats get filled, traffic goes down, and everyone gets to ski more.</p>
+    <div class="resorts">
+      <div class="resort-pill">⛷ Alta</div>
+      <div class="resort-pill">⛷ Snowbird</div>
+      <div class="resort-pill">⛷ Brighton</div>
+      <div class="resort-pill">⛷ Solitude</div>
+    </div>
+    <svg class="mountain-graphic" width="280" height="160" viewBox="0 0 280 160" fill="none">
+      <path d="M0 160 L70 40 L140 100 L210 20 L280 160Z" fill="white"/>
+    </svg>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-number">4</div>
+      <div class="stat-label">World-class resorts<br>two canyons</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">0</div>
+      <div class="stat-label">Cost to drivers<br>or riders</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Empty seats on the road today</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body-grid">
+    <div class="col-left">
+      <div class="section-label">The problem</div>
+      <div class="section-title">Great snow. Terrible traffic.</div>
+      <p class="section-body">Every powder day, thousands of cars crawl up the canyons — most with empty seats. Meanwhile, riders scramble for rides, parking fills in minutes, and the canyons absorb the damage. There's a better way up.</p>
+      <div class="section-label">How it works</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Drivers post open seats</div>
+            <div class="step-desc">Set your resort, pickup time, and how many stops you'll make. You're in control of who you accept.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Riders browse and request</div>
+            <div class="step-desc">Find a seat by resort, time, and starting area. Post a ride request if nothing fits.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Drivers approve riders</div>
+            <div class="step-desc">No automatic matching. Drivers review and accept before anything is confirmed.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Rate each other after</div>
+            <div class="step-desc">Ratings build a trusted community over time — good drivers and riders rise to the top.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-right">
+      <div class="section-label">Why it matters</div>
+      <div class="section-title">Fewer cars. Better canyons.</div>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-icon">🚗</div>
+          <div class="impact-title">Less traffic</div>
+          <div class="impact-desc">Every carpool removes a solo car from the road</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon">🅿️</div>
+          <div class="impact-title">More parking</div>
+          <div class="impact-desc">Fewer cars means more spots at the base</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon">🌿</div>
+          <div class="impact-title">Lower emissions</div>
+          <div class="impact-desc">Shared rides shrink your ski day footprint</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon">🤝</div>
+          <div class="impact-title">Real community</div>
+          <div class="impact-desc">Meet people who love the same mountains</div>
+        </div>
+      </div>
+      <div class="free-badge">
+        <div class="free-dot"></div>
+        <div class="free-text">100% free — no fares, no fees, no catches</div>
+      </div>
+      <p class="section-body" style="margin-bottom:0;">Cottonwood Carpool is built around community, not commerce. Drivers aren't paid. Riders don't pay fares. The only goal is getting more people up the canyon together.</p>
+    </div>
+  </div>
+
+  <div class="full-divider"></div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="section-label">Join the waitlist</div>
+    <div class="cta-title">Be first on the mountain<br>this season.</div>
+    <p class="cta-subtitle">Beta opens before the season starts. Join the waitlist to get early access, help shape the platform, and be part of something that actually helps the canyons.</p>
+    <a class="waitlist-btn-large" href="https://docs.google.com/forms/d/e/1FAIpQLSdwuLKlryYMyeKNqF0pLusnJe2HTHm6KBTPgZsqcPTOg4JbeA/viewform?usp=publish-editor" target="_blank">Join the waitlist →</a>
+    <p class="waitlist-note">Takes 2 minutes &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Free forever</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">Cottonwood <span>Carpool</span></div>
+    <div class="footer-note">Built for skiers. Built for the canyons. © 2025</div>
+  </div>
+
+</div>
+</body>
+</html>
